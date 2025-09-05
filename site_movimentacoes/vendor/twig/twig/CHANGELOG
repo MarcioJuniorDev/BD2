@@ -1,0 +1,12 @@
+# 4.0.0 (2024-XX-XX)
+
+ * Make the `raw` filter sticky
+ * Add back the `if` condition on `for` loops
+ * Add return types to all ExtensionInterface methods (`getFunctions()`, `getFilters()`, etc.)
+ * Add support for recursive loops (via the `loop()` function)
+ * Add `loop.changed`, `loop.previous`, `loop.next`, and `loop.cycle` variables
+ * Make `loop.last` always available (even for non-countable iterators)
+ * Change the compilation of `for` loops to throw an exception when a `loop.*` variable is not defined
+ * Make `Environment::getGlobals()` private
+ * Drop support for PHP < 8.2
+ * Escape characters are no longer ignored

@@ -1,0 +1,34 @@
+<?php
+
+/*
+ * This file is part of Twig.
+ *
+ * (c) Fabien Potencier
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
+namespace Twig\Util;
+
+/**
+ * @author Fabien Potencier <fabien@symfony.com>
+ */
+class TemplateDirIterator extends \IteratorIterator
+{
+    /**
+     * @return string
+     */
+    public function current(): mixed
+    {
+        return file_get_contents(parent::current());
+    }
+
+    /**
+     * @return string
+     */
+    public function key(): mixed
+    {
+        return (string) parent::key();
+    }
+}

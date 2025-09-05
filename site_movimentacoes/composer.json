@@ -1,0 +1,20 @@
+{
+    "name": "etec/movimentacoes",
+    "type": "project",
+    "require": {
+        "twig/twig": "4.x-dev",
+        "coffeecode/router": "dev-master"
+    },
+    "license": "proprietary",
+    "autoload": {
+        "psr-4": {
+            "Etec\\Movimentacoes\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Marcio Rolim, Samuel Varollo"
+        }
+    ],
+    "minimum-stability": "dev"
+}
