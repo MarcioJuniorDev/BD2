@@ -6,7 +6,22 @@
     <title>Document</title>
 </head>
 <body>
-    <p>estoque</p>
+     <form action="/estoques" method="post">
+        <p>estoques</p>
+
+        <label for="stqreferencia">Referência</label>
+        <input type="text" name="stqreferencia" id="stqreferencia">
+        <label for="stqproduto">Produto</label>
+        <input type="text" name="stqproduto" id="stqproduto">
+        <label for="stqlote">Lote</label>
+        <input type="text" name="stqlote" id="stqlote">
+        <label for="stqdtvalid">Data de validade</label>
+        <input type="text" name="stqdtvalid" id="stqdtvalid">
+        <label for="stqquantidade">Quantidade</label>
+        <input type="text" name="stqquantidade" id="stqquantidade">
+        
+        <input type="submit" name="enviar" id="enviar" value="Enviar">
+    </form>
     <button onclick="window.location.href = '/'">Voltar</button>
 </body>
 </html>

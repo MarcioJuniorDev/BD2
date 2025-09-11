@@ -6,7 +6,16 @@
     <title>Document</title>
 </head>
 <body>
-    <p>categorias</p>
+    <form action="/categorias" method="post">
+        <p>categorias</p>
+
+        <label for="ctgsubcateg">Subcategoria</label>
+        <input type="text" name="ctgsubcateg" id="ctgsubcateg">
+        <label for="ctgnome">Nome</label>
+        <input type="text" name="ctgnome" id="ctgnome">
+
+        <input type="submit" name="enviar" id="enviar" value="Enviar">
+    </form>
     <button onclick="window.location.href = '/'">Voltar</button>
 </body>
 </html>

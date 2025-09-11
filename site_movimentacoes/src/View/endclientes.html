@@ -6,7 +6,22 @@
     <title>Document</title>
 </head>
 <body>
-    <p>endereços clientes</p>
+     <form action="/cidades" method="post">
+        <p>endereços clientes</p>
+
+        <label for="edccep">CEP</label>
+        <input type="text" name="edccep" id="edccep">
+        <label for="edccliente">Cliente</label>
+        <input type="text" name="edccliente" id="edccliente">
+        <label for="edctipo">Tipo</label>
+        <input type="text" name="edctipo" id="edctipo">
+        <label for="edcnumero">Número</label>
+        <input type="text" name="edcnumero" id="edcnumero">
+        <label for="edcompl">Endereço completo</label>
+        <input type="text" name="edcompl" id="edcompl">
+        
+        <input type="submit" name="enviar" id="enviar" value="Enviar">
+    </form>
     <button onclick="window.location.href = '/'">Voltar</button>
 </body>
 </html>

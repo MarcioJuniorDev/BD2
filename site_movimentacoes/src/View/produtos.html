@@ -6,7 +6,24 @@
     <title>Document</title>
 </head>
 <body>
-    <p>produtos</p>
+     <form action="/produtos" method="post">
+        <p>produtos</p>
+
+        <label for="prdtitulo">Título</label>
+        <input type="text" name="prdtitulo" id="prdtitulo">
+        <label for="prddescricao">Descrição</label>
+        <input type="text" name="prddescricao" id="prddescricao">
+        <label for="prdvlrunit">Valor unitário</label>
+        <input type="text" name="prdvlrunit" id="prdvlrunit">
+        <label for="prdcategoria">Categoria</label>
+        <input type="text" name="prdcategoria" id="prdcategoria">
+        <label for="prdfornecedor">Fornecedor</label>
+        <input type="text" name="prdfornecedor" id="prdfornecedor">
+        <label for="prdativo">Ativo</label>
+        <input type="text" name="prdativo" id="prdativo">
+
+        <input type="submit" name="enviar" id="enviar" value="Enviar">
+    </form>
     <button onclick="window.location.href = '/'">Voltar</button>
 </body>
 </html>

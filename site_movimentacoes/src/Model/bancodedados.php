@@ -8,38 +8,33 @@ class bancodedados
 
     public function __construct()
     {
-        $this->conexao = new \PDO("mysql:host=localhost;dbname=BANCOG07_B", "GRUPO07_B", "Senha07!");
+        $this->conexao = new \PDO("mysql:host=localhost;dbname=BD2_MOVIMENTACOES", "root", "");
     }
 
     public function salvarCategoria(CATEGORIAS $u)
     {
-        $insertCategoria = $this->conexao->prepare("INSERT INTO CATEGORIAS(CTGCODIGO, CTGSUBCATEG, CTGNOME) VALUES (:ctgcodigo, :ctgsubcateg, :ctgnome)");
+        $insertCategoria = $this->conexao->prepare("INSERT INTO CATEGORIAS(CTGSUBCATEG, CTGNOME) VALUES (:ctgsubcateg, :ctgnome)");
 
-        $insertCategoria->bindValue(":ctgcodigo", $u->ctgcodigo);
         $insertCategoria->bindValue(":ctgsubcateg", $u->ctgsubcateg);
         $insertCategoria->bindValue(":ctgnome", $u->ctgnome);
 
-        // executa o comando
-        return $insertUsuario->execute();
+        return $insertCategoria->execute();
     }
 
     public function salvarCidades(CIDADES $u)
     {
-        $insertCidade = $this->conexao->prepare("INSERT INTO CIDADES(CDDCODIGO, CDDNOME, CDDESTADO) VALUES (:cddcodigo, :cddnome, :cddestado)");
+        $insertCidade = $this->conexao->prepare("INSERT INTO CIDADES(CDDNOME, CDDESTADO) VALUES (:cddnome, :cddestado)");
 
-        $insertCidade->bindValue(":cddcodigo", $u->cddcodigo);
         $insertCidade->bindValue(":cddnome", $u->cddnome);
         $insertCidade->bindValue(":cddestado", $u->cddestado);
 
-        // executa o comando
         return $insertCidade->execute();
     }
 
     public function salvarClientes(CLIENTES $u)
     {
-        $insertCliente = $this->conexao->prepare("INSERT INTO CLIENTES(CLICODIGO, CLICPF, CLINOME, CLIDTNASC, CLIEMAIL, CLITEL1, CLITEL2, CLISENHA) VALUES (:clicodigo, :clicpf, :clinome, :clidtnasc, :cliemail, :clitel1, :clitel2, :clisenha)");
+        $insertCliente = $this->conexao->prepare("INSERT INTO CLIENTES(CLICPF, CLINOME, CLIDTNASC, CLIEMAIL, CLITEL1, CLITEL2, CLISENHA) VALUES (:clicpf, :clinome, :clidtnasc, :cliemail, :clitel1, :clitel2, :clisenha)");
 
-        $insertCliente->bindValue(":clicodigo", $u->clicodigo);
         $insertCliente->bindValue(":clicpf", $u->clicpf);
         $insertCliente->bindValue(":clinome", $u->clinome);
         $insertCliente->bindValue(":clidtnasc", $u->clidtnasc);
@@ -48,7 +43,6 @@ class bancodedados
         $insertCliente->bindValue(":clitel2", $u->clitel2);
         $insertCliente->bindValue(":clisenha", $u->clisenha);
 
-        // executa o comando
         return $insertCliente->execute();
     }
 
@@ -61,7 +55,6 @@ class bancodedados
         $insertEndereco->bindValue(":endbairro", $u->endbairro);
         $insertEndereco->bindValue(":endcidade", $u->endcidade);
 
-        // executa o comando
         return $insertEndereco->execute();
     }
 
@@ -75,7 +68,6 @@ class bancodedados
         $insertEnd_clientes->bindValue(":edcnumero", $u->edcnumero);
         $insertEnd_clientes->bindValue(":edcompl", $u->edcompl);
 
-        // executa o comando
         return $insertEnd_clientes->execute();
     }
 
@@ -87,7 +79,6 @@ class bancodedados
         $insertEstados->bindValue(":stdnome", $u->stdnome);
         $insertEstados->bindValue(":stdregiao", $u->stdregiao);
 
-        // executa o comando
         return $insertEstados->execute();
     }
 
@@ -101,7 +92,57 @@ class bancodedados
         $insertEstoque->bindValue(":stqdtvalid", $u->stqdtvalid);
         $insertEstoque->bindValue(":stqquantidade", $u->stqquantidade);
 
-        // executa o comando
         return $insertEstoque->execute();
+    }
+
+    public function salvarFornecedor(FORNECEDORES $u)
+    {
+        $insertFornecedor = $this->conexao->prepare("INSERT INTO FORNECEDORES(FRNCNPJ, FRNRAZAOSOCIAL, FRNFANTASIA, FRNENDERECO, FRNENDNUM, FRNENDCOMPL) VALUES (:frncnpj, :frnrazaosocial, :frnfantasia, :frnendereco, :frnendnum, :frnendcompl)");
+
+        $insertFornecedor->bindValue(":frncnpj", $u->frncnpj);
+        $insertFornecedor->bindValue(":frnrazaosocial", $u->frnrazaosocial);
+        $insertFornecedor->bindValue(":frnfantasia", $u->frnfantasia);
+        $insertFornecedor->bindValue(":frnendereco", $u->frnendereco);
+        $insertFornecedor->bindValue(":frnendnum", $u->frnendnum);
+        $insertFornecedor->bindValue(":frnendcompl", $u->frnendcompl);
+
+        return $insertFornecedor->execute();
+    }
+
+    public function salvarProdutos(PRODUTOS $u)
+    {
+        $insertProduto = $this->conexao->prepare("INSERT INTO PRODUTOS(PRDTITULO, PRDDESCRICAO, PRDVLRUNIT, PRDCATEGORIA, PRDFORNECEDOR, PRDATIVO) VALUES (:prdtitulo, :prddescricao, :prdvlrunit, :prdcategoria, :prdfornecedor, :prdativo)");
+
+        $insertProduto->bindValue(":prdtitulo", $u->prdtitulo);
+        $insertProduto->bindValue(":prddescricao", $u->prddescricao);
+        $insertProduto->bindValue(":prdvlrunit", $u->prdvlrunit);
+        $insertProduto->bindValue(":prdcategoria", $u->prdcategoria);
+        $insertProduto->bindValue(":prdfornecedor", $u->prdfornecedor);
+        $insertProduto->bindValue(":prdativo", $u->prdativo);
+        
+        return $insertProduto->execute();
+    }
+
+    public function salvarMovimentacao(MOVIMENTACOES $u)
+    {
+        $insertMovimentacao = $this->conexao->prepare("INSERT INTO MOVIMENTACOES(MVTDATA, MVTTIPO, MVTPRODUTO, MVTQTDE, MVTLOTE) VALUES (:mvtdata, :mvttipo, :mvtproduto, :mvtqtde, :mvtlote)");
+
+        $insertMovimentacao->bindValue(":mvtdata", $u->mvtdata);
+        $insertMovimentacao->bindValue(":mvttipo", $u->mvttipo);
+        $insertMovimentacao->bindValue(":mvtproduto", $u->mvtproduto);
+        $insertMovimentacao->bindValue(":mvtqtde", $u->mvtqtde);
+        $insertMovimentacao->bindValue(":mvtlote", $u->mvtlote);
+        
+        return $insertMovimentacao->execute();
+    }
+
+    public function salvarTipo_mov(TIPOS_MOV $U)
+    {
+        $insertTipo_mov = $this->conexao->prepare("INSERT INTO TIPOS_MOV(TPMACAO, TPMDESCRICAO) VALUES (:tpmacao, :tpmdescricao)");
+
+        $insertTipo_mov->bindValue(":tpmacao", $u->tpmacao);
+        $insertTipo_mov->bindValue(":tpmdescricao", $u->tpmdescricao);
+
+        return $insertTipo_mov->execute();
     }
 }

@@ -6,7 +6,16 @@
     <title>Document</title>
 </head>
 <body>
-    <p>tipos movimentações</p>
+     <form action="/tiposmov" method="post">
+        <p>tipo de movimentação</p>
+
+        <label for="tpmacao">Ação</label>
+        <input type="text" name="tpmacao" id="tpmacao">
+        <label for="tpmdescricao">Descrição</label>
+        <input type="text" name="tpmdescricao" id="tpmdescricao">
+
+        <input type="submit" name="enviar" id="enviar" value="Enviar">
+    </form>
     <button onclick="window.location.href = '/'">Voltar</button>
 </body>
 </html>

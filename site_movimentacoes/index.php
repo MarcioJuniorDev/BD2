@@ -23,4 +23,16 @@ $roteador -> get("/produtos", "principal:produtos");
 $roteador -> get("/movimentacoes", "principal:movimentacoes");
 $roteador -> get("/tipos_mov", "principal:tipos_mov");
 
+$roteador -> post("/clientes", "principal:clientes_salvar");
+$roteador -> post("/end_clientes", "principal:end_clientes_salvar");
+$roteador -> post("/estoques", "principal:estoques_salvar");
+$roteador -> post("/categorias", "principal:categorias_salvar");
+$roteador -> post("/enderecos", "principal:enderecos_salvar");
+$roteador -> post("/fornecedores", "principal:fornecedores_salvar");
+$roteador->post("/cidades", "principal:cidades_salvar");
+$roteador -> post("/estados", "principal:estados_salvar");
+$roteador -> post("/produtos", "principal:produtos_salvar");
+$roteador -> post("/movimentacoes", "principal:movimentacoes_salvar");
+$roteador -> post("/tipos_mov", "principal:tipos_mov_salvar");
+
 $roteador -> dispatch();

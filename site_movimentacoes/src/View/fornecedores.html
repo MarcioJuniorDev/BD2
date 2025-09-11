@@ -6,7 +6,24 @@
     <title>Document</title>
 </head>
 <body>
-    <p>fornecedores</p>
+     <form action="/fornecedores" method="post">
+        <p>fornecedores</p>
+
+        <label for="frncnpj">CNPJ</label>
+        <input type="text" name="frncnpj" id="frncnpj">
+        <label for="frnrazaosocial">Razão social</label>
+        <input type="text" name="frnrazaosocial" id="frnrazaosocial">
+        <label for="frnfantasia">Fantasia</label>
+        <input type="text" name="frnfantasia" id="frnfantasia">
+        <label for="frnendereco">Endereço</label>
+        <input type="text" name="frnendereco" id="frnendereco">
+        <label for="frnendnum">Endereço número</label>
+        <input type="text" name="frnendnum" id="frnendnum">
+        <label for="frnendcompl">Endereço completo</label>
+        <input type="text" name="frnendcompl" id="frnendcompl">
+        
+        <input type="submit" name="enviar" id="enviar" value="Enviar">
+    </form>
     <button onclick="window.location.href = '/'">Voltar</button>
 </body>
 </html>

@@ -6,7 +6,16 @@
     <title>Document</title>
 </head>
 <body>
-    <p>cidades</p>
+    <form action="/cidades" method="post">
+        <p>cidades</p>
+
+        <label for="cddnome">Nome</label>
+        <input type="text" name="cddnome" id="cddnome">
+        <label for="cddestado">Estado</label>
+        <input type="text" name="cddestado" id="cddestado">
+        
+        <input type="submit" name="enviar" id="enviar" value="Enviar">
+    </form>
     <button onclick="window.location.href = '/'">Voltar</button>
 </body>
 </html>

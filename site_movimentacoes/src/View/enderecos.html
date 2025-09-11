@@ -6,7 +6,20 @@
     <title>Document</title>
 </head>
 <body>
-    <p>endereços</p>
+     <form action="/enderecos" method="post">
+        <p>enderecos</p>
+
+        <label for="endcep">CEP</label>
+        <input type="text" name="endcep" id="endcep">
+        <label for="endlograd">Logradouro</label>
+        <input type="text" name="endlograd" id="endlograd">
+        <label for="endbairro">Bairro</label>
+        <input type="text" name="endbairro" id="endbairro">
+        <label for="endcidade">Cidade</label>
+        <input type="text" name="endcidade" id="endcidade">
+        
+        <input type="submit" name="enviar" id="enviar" value="Enviar">
+    </form>
     <button onclick="window.location.href = '/'">Voltar</button>
 </body>
 </html>

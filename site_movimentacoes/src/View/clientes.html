@@ -6,7 +6,26 @@
     <title>Document</title>
 </head>
 <body>
-    <p>clientes</p>
+     <form action="/clientes" method="post">
+        <p>clientes</p>
+
+        <label for="clicpf">CPF</label>
+        <input type="text" name="clicpf" id="clicpf">
+        <label for="clinome">Nome</label>
+        <input type="text" name="clinome" id="clinome">
+        <label for="clidtnasc">Data de nascimento</label>
+        <input type="text" name="clidtnasc" id="clidtnasc">
+        <label for="cliemail">Email</label>
+        <input type="text" name="cliemail" id="cliemail">
+        <label for="clitel1">Telefone 1</label>
+        <input type="text" name="clitel1" id="clitel1">
+        <label for="clitel2">Telefone 2</label>
+        <input type="text" name="clitel2" id="clitel2">
+        <label for="clisenha">Senha</label>
+        <input type="text" name="clisenha" id="clisenha"> 
+        
+        <input type="submit" name="enviar" id="enviar" value="Enviar">
+    </form>
     <button onclick="window.location.href = '/'">Voltar</button>
 </body>
 </html>
