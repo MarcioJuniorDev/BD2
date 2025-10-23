@@ -1,70 +1,89 @@
 <?php
-// inicia a sessão, pegando os dados do usuário por meio dos "cookies" do navegador
 session_start();
 
-// verifica se existe a página. se não, cria a variável. Na prática, essa verificação testa se o usuário já entrou no site ou não.
 if (!isset($_SESSION['PAGINA']))
 {
     $_SESSION['PAGINA'] = 0;
 }
 
-// verifica se o parâmetro "MUDAPAG" foi enviada. se sim, adiciona o parâmetro na página, variável que controla a indexação dos selects.
 if(isset($_GET['MUDAPAG']))
 {
     $_SESSION['PAGINA'] += (int)$_GET['MUDAPAG'];
 }
 
-// conexão com o banco de dados
 $oCon = new PDO('mysql:host=localhost; dbname=BANCOCOMUM', 'Aluno2DS', 'SenhaBD2');
 
-// variáveis
-// - campos do banco de dados que aparecem para o usuário
 $nCod = 0;
 $cNome = "";
-// - quantidade de registros que aparecem em cada página
-$nQtdeReg = 20;
+$nQtdeReg = 14;
+$cTipoMensagem = "";
+$cMensagem = "";
 
-// verifica se existe a variável "txtNome" nos dados enviados pelo formulário
+$cPesquisa = "";
+
 if(isset($_GET['txtNome']))
 {
-	// retira os espaços do começo e fim e verifica se a quantidade de caracteres (strlen) é diferente de 0, assim sabemos se existe ou não algum texto em txtNome
     if(strlen(trim($_GET['txtNome'])) != 0)
     {
-		// a variavel txtCod inicia como 0. se ela for diferente disso, quer dizer que o usuário fez uma alteração nela e que quer mudar algum registro no banco de dados
-        if($_GET['txtCod'] != 0)
+        if(isset($_GET['cmdGravar']))
         {
-			// atualiza a tabela EXERCICIO, colocando o texto que o usuário informou como EXRDESCRICAO nos registros que tem código igual ao código informado pelo formulário(o código é puxado a partir da descrição quando o usuário seleciona ela no html)
-            $cSQL = "UPDATE EXERCICIO SET EXRDESCRICAO = '". trim($_GET['txtNome']) . "' WHERE EXRCODIGO = " . $_GET['txtCod'];
-            $oCon->exec($cSQL);
+            if($_GET['txtCod'] != 0)
+            {
+                $cSQL = "UPDATE EXERCICIO SET EXRDESCRICAO = '". trim($_GET['txtNome']) . "' WHERE EXRCODIGO = " . $_GET['txtCod'];
+                if ($oCon->exec($cSQL))
+                {
+                    $cTipoMensagem = "Exito";
+                    $cMensagem = "Alterações realizadas com sucesso";
+                }
+                else
+                {
+                    $cTipoMensagem = "Erro";
+                    $cMensagem = "Ocorreu erro ao alterar o registro: <br />" . $oCon->errorInfo()[2];
+                }
+            }
+            else
+            {
+                $cSQL = "INSERT INTO EXERCICIO(EXRDESCRICAO) VALUES('" . trim($_GET['txtNome']) . "')";
+                if ($oCon->exec($cSQL))
+                {
+                    $cTipoMensagem = "Exito";
+                    $cMensagem = "Registro incluido com sucesso";
+                }
+                else
+                {
+                    $cTipoMensagem = "Erro";
+                    $cMensagem = "Ocorreu erro ao incluir o registro: <br />" . $oCon->errorInfo()[2];
+                }
+            }
         }
-		// se o codigo for igual a 0, quer dizer que o usuário não está alterando nenhum registro existente, logo quer adicionar um novo registro no banco de dados.
         else
         {
-			// insere no EXERCICIO o texto do usuário na EXRDESCRICAO
-        	$cSQL = "INSERT INTO EXERCICIO(EXRDESCRICAO) VALUES('" . trim($_GET['txtNome']) . "')";
-        	$oCon->exec($cSQL);
+            $cPesquisa = trim($_GET['txtNome']);
         }
     }
 }
 
-// veririca se radSelecao foi enviado
 if(isset($_GET['radSelecao']))
 {
-	// deleta o registro baseado no radSelecao, que envia o código do registro selecionado
     $cSQL = "DELETE FROM EXERCICIO WHERE EXRCODIGO = " . ((int)$_GET['radSelecao']);
-    $oCon->exec($cSQL);
+    if ($oCon->exec($cSQL))
+    {
+        $cTipoMensagem = "Exito";
+        $cMensagem = "Remoção realizada com sucesso";
+    }
+    else
+    {
+        $cTipoMensagem = "Erro";
+        $cMensagem = "Ocorreu erro ao remover o registro: <br />" . $oCon->errorInfo()[2];
+    }
 }
 
-// verifica se CODALT foi enviado. CODALT é enviado quando o usuário seleciona algum dos registros
 if(isset($_GET['CODALT']))
 {
-	// pega as informações do registro selecionado a partir do CODALT, que tem valor igual ao código do registro. armazena no $cSQL
     $cSQL = "SELECT * FROM EXERCICIO WHERE EXRCODIGO = " . ((int)$_GET['CODALT']);
 
-	// verifica se a execução do select retorna algum registro. se sim, atribui os campos do banco de dados como posições de um array de $vReg
     if ($vReg = $oCon->query($cSQL, PDO::FETCH_ASSOC)->fetch())
     {
-		// atribui as variavéis que aparecem para os usuário com valor igual aos campos buscados no banco de dados. assim, o usuário tem acesso aos valores dos campos do registro que selecionou
         $nCod = $vReg['EXRCODIGO'];
         $cNome = $vReg['EXRDESCRICAO'];
     }
@@ -72,20 +91,105 @@ if(isset($_GET['CODALT']))
 ?>
 
 <html>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Public+Sans:ital,wght@0,100..900;1,100..900&display=swap');
+
+        *
+        {
+            box-sizing: border-box;
+            font-family: 'Bebas Neue', monospace;
+        }
+
+        form:first-of-type
+        {
+            margin: 10px 4%;
+            width: 90%;
+        
+            & > label
+            {
+                display: block;
+            }
+
+            & > input
+            {
+                width: 75%;
+            }
+
+            & > button
+            {
+                width: 12%;
+            }
+        }
+
+        table
+        {
+            margin: 50px 4%;
+            width: 90%;
+            border: 1px double #CFCFCF;
+        }
+
+        tr:nth-child(odd)
+        {
+            background-color: #FCFCFC;
+        }
+        
+        tr:nth-child(even)
+        {
+            background-color: #EDEDED;
+        }
+
+        table TBODY tr:hover
+        {
+            background-color: #3090F3;
+            color: ;
+        }
+
+        th
+        {
+            background-color: #606060;
+            color: #FFFFFF;
+            font-family: 'Public Sans', sans-serif;
+        }
+
+        .Exito, .Erro
+        {
+            margin: 5px 4%;
+            padding: 2px 10px 2px 50px;
+            width: 90%;
+        }
+
+        .Exito
+        {
+            background-color: #CFFFCF;
+            border: 1px solid #009000;
+            border-left: 5px solid #009000;
+        }
+
+        .Erro
+        {
+            background-color: #FFCFCF;
+            border: 1px solid #900000;
+            border-left: 5px solid #900000;
+        }
+    </style>
 	<body>
 		<form>
-			 <!-- hidden esconde o input, algo que o usuário não precisa ver, mas ainda aparece no código fonte -->
-			<!-- usado para buscar no banco de dados -->
+            <label for>Descrição</label>
 			<input type="hidden" name="txtCod" value="<?= $nCod ?>"/>
-			<!-- valor de EXRDESCRICAO, seja ao adicionar ou selecionar/alterar um registro -->
 			<input name="txtNome" value="<?= $cNome ?>"/>
+            <button name="cmdGravar">Gravar alterações</button>
+            <button name="cmdPesquisar">Pesquisar</button>
 		</form>
 		
+        <div id="pnlMensagem" class="<?= $cTipoMensagem ?>">
+            <span><?= $cMensagem ?></span>
+        </div>
+
         <form>
             <table>
                 <thead>
                     <tr>
-						<!-- campos do banco de dados  -->
                         <th>#</th>			
                         <th>Nome</th>
                         <th>Dt. inclusão</th>
@@ -93,30 +197,28 @@ if(isset($_GET['CODALT']))
                 </thead>
                 <tbody>
                     <?php
-					// seleciona de x a y registros de EXERCICIO, ordenados pela data de inclusão. x é um valor igual à pagina vezes a quantidade de registros que pode mostrar (ex. a página inicial é 0*20, que resulta em 0) e significa a posição inicial do select. y é o limite, quantos registros ele mostrará após o x.
-                    $cSQL = "SELECT * FROM EXERCICIO ORDER BY EXRDATAINCLUSAO DESC LIMIT " . ($_SESSION['PAGINA'] * $nQtdeReg) . ", $nQtdeReg";  
-					// para cada registro do select, atribui os campos selecionados como posições do array vReg
+                    $cSQL = "SELECT EXRCODIGO, EXRDESCRICAO, DATE_FORMAT(EXRDATAINCLUSAO, '%d/%m/%Y %H:%I:%S') EXRDATAINCLUSAO FROM EXERCICIO WHERE EXRDESCRICAO LIKE '%$cPesquisa%' ORDER BY EXRDATAINCLUSAO DESC LIMIT " . ($_SESSION['PAGINA'] * $nQtdeReg) . ", $nQtdeReg";  
                     foreach($oCon->query($cSQL, PDO::FETCH_ASSOC) as $vReg)
-					// mostra na tela uma tabela
                     echo '<tr>' .
-						// radio com o valor igual ao código do registro. assim, poderemos saber qual registro é quando esse radio for selecionado e enviado
                         '  <td><input type="radio" name="radSelecao" value="' . $vReg['EXRCODIGO'] . '"</td>' .
-						// texto com o código e nome do registro. recebe um <a> para que quando o registro seja selecionado, envie para outra página. a página é a mesma (? do href), mas envia CODALT como parâmetro. Na prática, o <a> causa o recarregamento da página com um parâmetro, que quando testado executa outros blocos de código
                         '  <td><a href="?CODALT=' . $vReg['EXRCODIGO'] . '">' . $vReg['EXRDESCRICAO'] . '</a></td>' .
-						// campo de tabela com a data de inclusão
                         '  <td>' . $vReg['EXRDATAINCLUSAO'] . '</td>' .
                         '</tr>';
                     ?>
                 </tbody>
+                <tfoot>
+                    <tr>
+                        <td>&nbsp;</td>
+                        <td>
+                            <button name="btnExcluir" onclick="if (confirm('Deseja realmente excluir o registro?\nEssa operação não poderá ser desfeita')) this.parentElement.submit()">Remover seleção</button>
+                            <a href="<?=$_SESSION['PAGINA'] == 0?' # ' : '?MUDAPAG=-1' ?>">&lt;</a>
+                            <input type="number" value="<?= $_SESSION['PAGINA'] + 1 ?>" readonly>
+                            <a href="?MUDAPAG=1">&gt;</a>
+                        </td>
+                        <td>Pronto.</td>
+                    </tr>
+                </tfoot>
             </table>
-			<!-- botões para ações  -->
-			<!-- exclui um registro. antes disso, confirma se o usuário realmente quer deletar ele -->
-            <button name="btnExcluir" type="button" onclick="if (confirm('Deseja realmente excluir o registro?\nEssa operação não poderá ser desfeita')) this.parentElement.submit()">Remover seleção</button>
-            <!-- "?" chama a própria página -->
-			<!-- volta uma página, com -1 no MUDAPAG (assim, PAGINA += -1) -->
-            <a href="?MUDAPAG=-1">Página Anterior</a>
-			<!-- avança uma página, incrementando o PÁGINA  -->
-            <a href="?MUDAPAG=1">Próxima página</a>
         </form>
 	</body>
 </html>
